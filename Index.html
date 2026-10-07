@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votação Bloody Roar</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    h1 {
+      color: #ff3333;
+    }
+
+    .personagens {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      margin: 12px 0;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    #mensagem {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🔥 VOTAÇÃO BLOODY ROAR 🔥</h1>
+
+  <p>Escolha seu personagem favorito:</p>
+
+  <div class="personagens">
+    <button onclick="votar('Yugo')">Yugo</button>
+    <button onclick="votar('Alice')">Alice</button>
+    <button onclick="votar('Bakuryu')">Bakuryu</button>
+    <button onclick="votar('Long')">Long</button>
+    <button onclick="votar('Jenny')">Jenny</button>
+    <button onclick="votar('Gado')">Gado</button>
+    <button onclick="votar('Shenlong')">Shenlong</button>
+    <button onclick="votar('Uriko')">Uriko</button>
+  </div>
+
+  <div id="mensagem"></div>
+
+  <script>
+    const SUPABASE_URL = https://huscpkqqwzbysuierktk.supabase.co
+    const SUPABASE_ANON_KEY = sb_publishable_5LuahVlOwKDmv49JBN4-Gg_PojGwzxE
+
+    const supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    async function votar(personagem) {
+      const mensagem = document.getElementById("mensagem");
+
+      mensagem.textContent = "Registrando voto...";
+
+      const { error } = await supabase
+        .from("votos")
+        .insert([{ personagem: personagem }]);
+
+      if (error) {
+        console.error(error);
+        mensagem.textContent = "❌ Erro ao registrar o voto.";
+        return;
+      }
+
+      mensagem.textContent = "✅ Voto registrado com sucesso!";
+    }
+  </script>
+
+</body>
+</html>
